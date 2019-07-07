@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2.this对象理解</title>
+</head>
+
+<body>
+</body>
+
+<script>
+    // 例子1：
+    function a() {
+        var user = "张三";
+        console.log(this.user); //undefined
+        console.log(this); //Window 指向window
+    }
+    a();
+    //等价于
+    function a() {
+        var user = "张三";
+        console.log(this.user); //undefined
+        console.log(this); //Window 指向window
+    }
+    window.a();
+
+    //例子2：
+    var o = {
+        user: "张三",
+        fn: function () {
+            console.log(this.user); //张三
+        }
+    }
+    o.fn();
+    /* 
+    this指向的是对象o，因为调用这个fn是通过o.fn()执行的，那自然指向就是对象o，
+    这里再次强调一点，this的指向在函数创建的时候是决定不了的，
+    在调用的时候才能决定，谁调用的就指向谁，一定要搞清楚这个。
+     */
+
+    //例子3：
+    var o = {
+        user: "张三",
+        fn: function () {
+            console.log(this.user); //张三
+        }
+    }
+    window.o.fn();
+
+    var o = {
+        a: 10,
+        b: {
+            a: 12,
+            fn: function () {
+                console.log(this);
+                console.log(this.a); //12
+            },
+            c: {
+                a: 13,
+                fn: function () {
+                    console.log(this);
+                    console.log(this.a); //13
+                },
+            }
+        }
+    }
+    window.o.b.fn();
+    window.o.b.c.fn();
+    /* 
+    情况1：如果一个函数中有this，但是它没有被上一级的对象所调用，那么this指向的就是window，
+    这里需要说明的是在js的严格版中this指向的不是window，但是我们这里不探讨严格版的问题，你想了解可以自行上网查找。
+　　情况2：如果一个函数中有this，这个函数有被上一级的对象所调用，那么this指向的就是上一级的对象。
+　　情况3：如果一个函数中有this，这个函数中包含多个对象，尽管这个函数是被最外层的对象所调用，
+          this指向的也只是它上一级的对象，例子3可以证明。
+     */
+
+    // 例子4：还有一种比较特殊的情况，
+    var o = {
+        a: 10,
+        b: {
+            a: 12,
+            fn: function () {
+                console.log(this.a); //undefined
+                console.log(this); //window
+            }
+        }
+    }
+    var j = o.b.fn;
+    j(); //相当于 window.j();
+
+
+    // 构造函数版this：
+    function Fn() {
+        console.log(this); //追梦
+        this.user = "追梦";
+    }
+    var a = new Fn();
+    console.log(a.user); //追梦
+
+    var a = {
+        user: "追梦1"
+    }
+    console.log(a.user); //追梦1
+
+    /* 
+    因为new关键字可以改变this的指向，将这个this指向对象a。
+    因为用了new关键字就是创建一个对象实例，
+    这里用变量a创建了一个Fn的实例（相当于复制了一份Fn到对象a里面），
+    此时仅仅只是创建，并没有执行，而调用这个函数Fn的是对象a，那么this指向的自然是对象a
+     */
+</script>
+<script>
+    function fn1() {
+        this.user = '追梦';
+        return {};
+    }
+    var c = new fn1;
+    console.log(c.user); //undefined
+
+    function fn2() {
+        this.user = '追梦';
+        return function () {};
+    }
+    var d = new fn2;
+    console.log(d.user); //undefined
+
+    function fn3() {
+        this.user = '追梦';
+        return 1;
+    }
+    var e = new fn3;
+    console.log(e.user); //追梦
+
+    function fn4() {
+        this.user = '追梦';
+        return undefined;
+    }
+    var f = new fn4;
+    console.log(f.user); //追梦
+    // 如果返回值是一个对象，那么this指向的就是那个返回的对象，如果返回值不是一个对象那么this还是指向函数的实例
+
+    function fn5() {
+        this.user = '追梦';
+        return null; //null也是对象，但是在这里this还是指向那个函数的实例，因为null比较特殊。
+    }
+    var a = new fn5;
+    console.log(a.user); //追梦
+
+    /*  
+     知识点补充：
+      1. 在严格版中的默认的this不再是window， 而是undefined。
+      2. new操作符会改变函数this的指向问题， 虽然我们上面讲解过了， 但是并没有深入的讨论这个问题， 网上也很少说， 所以在这里有必要说一下。
+    */
+    function fn6() {
+        this.num = 1;
+    }
+    var a = new fn6(); //首先new关键字会创建一个空的对象，然后会自动调用一个函数apply方法，将this指向这个空对象，这样的话函数内部的this就会被这个空的对象替代。
+    console.log(a.num); //1
+</script>
+
+</html>

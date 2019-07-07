@@ -5,11 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1.json字符串与对象相互转换</title>
+    <title>1.JSON.stringify()和JSON.parse()</title>
 </head>
 
 <body>
 
 </body>
+
+<script>
+    // JSON字符串:
+    var str1 = '{ "name": "cxh", "sex": "man" }';
+    // JSON对象:
+    var str2 = {
+        "name": "cxh",
+        "sex": "man"
+    };
+
+    //1、由JSON字符串转换为JSON对象
+    var obj = eval('(' + str1 + ')');
+    console.log(obj);
+    console.log(typeof obj);
+
+    // var obj = str1.parseJSON();//JQuery方法
+    var obj = JSON.parse(str1);
+    console.log(obj);
+    console.log(typeof obj);
+
+    //1、由JSON对象转换为JSON字符串
+    // var last = str2.toJSONString(); 
+    var last = JSON.stringify(str2);
+    console.log(last);
+    console.log(typeof last);
+    /*
+     除了eval()函数是js自带的之外，其他的几个方法都来自json.js包。
+    新版本的JSON修改了API，将JSON.stringify()和JSON.parse()两个方法都注入到了 Javascript 的内建对象里面，
+    前者变成了Object.toJSONString()，而后者变成了 String.parseJSON()。
+    如果提示找不到toJSONString()和parseJSON()方法，则说明您的json包版本太低。
+     */
+</script>
 
 </html>
