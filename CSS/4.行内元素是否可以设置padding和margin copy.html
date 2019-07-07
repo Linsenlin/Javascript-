@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var Uesr = {
+        count: 1,
+        getCount() {
+            console.log(this);
+            return this.count;
+        }
+    }
+
+    // console.log(this)
+    console.log(Uesr.getCount());
+    var func = Uesr.getCount;
+    console.log(func);
+    console.log(func());
+</script>
+
+</html>
