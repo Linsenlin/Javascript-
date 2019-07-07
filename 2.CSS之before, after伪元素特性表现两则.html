@@ -1,0 +1,28 @@
+3<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #cd0000;
+        }
+
+        .box:empty {
+            background-color: #fae6e6;
+        }
+
+        .pseudo::after {
+            content: '伪元素生成内容';
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box pseudo"></div>
+</body>
+
+</html>
