@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3.JS call,apply,bind方法的总结</title>
+</head>
+
+<body>
+</body>
+
+<script>
+    var a = {
+        user: "追梦子",
+        fn: function () {
+            console.log(this);
+            console.log(this.user);
+        }
+    }
+    var b = a.fn;
+    b(); //undefined  //相当于 window.b();
+
+    //call()、apply()、bind() 都是用来重定义 this 这个对象的！
+
+    // 1、call()
+    var a = {
+        user: "追梦子",
+        fn: function () {
+            console.log(this.user); //追梦子
+        }
+    }
+    var b = a.fn;
+    b.call(a); //追梦子
+
+    /* 
+    通过在call方法，给第一个参数添加要把b添加到哪个环境中，
+    简单来说，this就会指向那个对象。
+    call方法除了第一个参数以外还可以添加多个参数，如下：
+     */
+    var a = {
+        user: "追梦子",
+        fn: function (e, ee) {
+            console.log(this.user); //追梦子
+            console.log(e + ee); //3
+        }
+    }
+    var b = a.fn;
+    b.call(a, 1, 2); //3
+</script>
+<script>
+    var name = '小王';
+    var age = 17;
+
+    var obj = {
+        name: '校长',
+        objAge: this.age,
+        // age: 18,
+        myFun: function () {
+            console.log(this);
+            console.log(this.name + '年龄' + this.age);
+        },
+    }
+    console.log(obj.objAge);
+    obj.myFun();
+</script>
+
+</html>

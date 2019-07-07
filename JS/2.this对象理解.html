@@ -159,6 +159,10 @@
     }
     var a = new fn6(); //首先new关键字会创建一个空的对象，然后会自动调用一个函数apply方法，将this指向这个空对象，这样的话函数内部的this就会被这个空的对象替代。
     console.log(a.num); //1
+    /* 
+    　注意: 当你new一个空对象的时候,js内部的实现并不一定是用的apply方法来改变this指向的,这里我只是打个比方而已.
+　　  if (this === 动态的\可改变的) return true;
+     */
 </script>
 
 </html>
